@@ -8,19 +8,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      uses: actions/checkout@v2
+    - name: Upload Repo
+      uses: actions/upload-artifact@v2
+      with:
+        name: code
+        path: .
       - name: Install dependencies
         run: sudo apt-get update  && sudo apt-get install golang-go -y
       - name: Build
         run: cd frontend && go build .
       - name: Test
         run: cd frontend && go test .
+  Clone-down:
   Push_to_docker:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: upload code
-        uses: actions/upload-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: code
           path: .
