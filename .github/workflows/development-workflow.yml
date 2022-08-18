@@ -3,11 +3,11 @@ on:
   # Trigger the workflow on push or pull request,
   # but only for the main branch
   push:
-    branches:
-      - development
+#    branches:
+#      - development
 env:
-  docker_username: ${{ secrets.DOCKER_USERNAME }}
-  docker_password: ${{ secrets.DOCKER_PASSWORD }}
+  docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
+  docker_password: ${{ secrets.DOCKERHUB_TOKEN }}
 jobs:
   build:
     runs-on: self-hosted
@@ -20,12 +20,23 @@ jobs:
         run: cd frontend && go build .
       - name: Test
         run: cd frontend && go test .
-  # Push_to_docker:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: upload code
-  #       uses: docker/login-action@v1
-  #       with:
-  #         username: $docker_username
-  #         password: $docker_password
+  Push_to_docker:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: check out
+        uses: actions/checkout@v3
+      - name: envtest
+      
+        run: echo env.docker_username && echo $env.docker_username && echo ${{ env.docker_username}} && echo ${{secrets.docker_username}}
+      - name: login
+        uses: docker/login-action@v1
+        with:
+          username: nicobah
+          password: dckr_pat_wR0rsVxvl06euxIjWshxdLCipYk
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: ./backend
+          push: true
+          tags: nicobah/random

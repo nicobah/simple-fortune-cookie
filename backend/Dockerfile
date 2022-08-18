@@ -14,5 +14,8 @@ RUN update-ca-certificates
 #RUN go run backend
 #RUN go install github.com/gomodule/redigo/redis@latest
 COPY . .
+#RUN apt-get install redis-server -y
+#RUN apt-get install systemctl -y
+#RUN systemctl restart redis.service
 RUN go build backend
-#CMD ["go", "run", "backend"]
+CMD ["go", "run", "backend"]
