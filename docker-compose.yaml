@@ -4,8 +4,8 @@ services:
     image: redis:latest
 
   backend:
-#    depends_on:
-#      - redis
+    depends_on:
+      - redis
     build:
       context: ./backend
       dockerfile: Dockerfile
