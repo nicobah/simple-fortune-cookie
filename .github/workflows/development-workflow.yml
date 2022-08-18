@@ -32,8 +32,8 @@ jobs:
       - name: upload code
         uses: docker/login-action@v1
         with:
-          username: env.docker_username
-          password: env.docker_password
+          username: ${{ env.docker_username}}
+          password: ${{ env.docker_password}}
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
