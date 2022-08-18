@@ -29,11 +29,3 @@ jobs:
         with:
           username: $docker_username
           password: $docker_password
-#        uses: actions/download-artifact@v2
-#        with:
-#          name: code
-#          path: .
-#      - name: login
- #       run: chmod +x build-docker.sh && bash  build-docker.sh
-#      - name: push
-#        run: chmod +x push-docker.sh && bash push-docker.sh
