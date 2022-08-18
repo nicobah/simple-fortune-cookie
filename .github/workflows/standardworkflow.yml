@@ -19,6 +19,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+        name: upload code
+        uses: actions/upload-artifact@v2
+        with:
+          name: code
+          path: .
       - name: login
         run: chmod +x build-docker.sh && build-docker.sh
       - name: push
