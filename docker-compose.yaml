@@ -1,10 +1,19 @@
 version: '3'
 services:
+  redis:
+    image: redis:latest
+
   backend:
+#    depends_on:
+#      - redis
     build:
       context: ./backend
       dockerfile: Dockerfile
   frontend:
+    depends_on:
+      - backend
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    ports:
+      - 9001:8080
