@@ -6,14 +6,10 @@ services:
   backend:
     depends_on:
       - redis
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: nicobah/devops_backend:latest
   frontend:
     depends_on:
       - backend
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: nicobah/devops_frontend:latest
     ports:
       - 9001:8080
