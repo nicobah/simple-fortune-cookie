@@ -19,7 +19,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-        name: upload code
+      - name: upload code
         uses: actions/upload-artifact@v2
         with:
           name: code
