@@ -15,10 +15,12 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: nginx
+        app: frontend
     spec:
       containers:
-      - image: nginx:1.7.9
-        name: nginx
+      - image: nicobah/devops_frontend:latest
+        name: frontend
+        ports:
+        - containerPort: 80
         resources: {}
 status: {}
