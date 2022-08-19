@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app: frontend          # arbitrary label on deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:        # labels the replica selector should match
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend      # label for replica selector to match
+      #  version: 1.7.9  # arbitrary label we can match on elsewhere
+    spec:
+      containers:
+      - name: deployment-frontend
+        image: nicobah/devops_frontend:latest
+        ports:
+        - containerPort: 80
+

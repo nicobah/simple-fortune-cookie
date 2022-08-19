@@ -12,9 +12,9 @@ import (
     "math/rand"
 )
 
-var BACKEND_DNS=getEnv("BACKEND_DNS", "backend")
-var BACKEND_PORT=getEnv("BACKEND_PORT", "9000")
-
+//var BACKEND_DNS=getEnv("BACKEND_DNS", "backend")
+//var BACKEND_PORT=getEnv("BACKEND_PORT", "9000")
+var BACKEND_SERVICE=getEnv("BACKEND_SERVICE_HOST", ":80")
 type fortune struct {
 	ID      string `json:"id" redis:"id"`
 	Message string `json:"message" redis:"message"`
@@ -37,7 +37,7 @@ func main() {
     http.HandleFunc("/healthz", HealthzHandler)
 
     http.HandleFunc("/api/random", func (w http.ResponseWriter, r *http.Request) {
-        resp, err := myClient.Get(fmt.Sprintf("http://%s:%s/fortunes/random", BACKEND_DNS, BACKEND_PORT))
+        resp, err := myClient.Get(fmt.Sprintf("http://%s/fortunes/random", BACKEND_SERVICE))
         if err != nil {
             log.Fatalln(err)
             fmt.Fprint(w, err)
@@ -52,7 +52,7 @@ func main() {
     })
 
     http.HandleFunc("/api/all", func (w http.ResponseWriter, r *http.Request) {
-        resp, err := myClient.Get(fmt.Sprintf("http://%s:%s/fortunes", BACKEND_DNS, BACKEND_PORT))
+        resp, err := myClient.Get(fmt.Sprintf("http://%s/fortunes", BACKEND_SERVICE))
         if err != nil {
             log.Fatalln(err)
             fmt.Fprint(w, err)
@@ -84,7 +84,7 @@ func main() {
         f := new(newFortune)
         json.NewDecoder(r.Body).Decode(f)
 
-        var postUrl = fmt.Sprintf("http://%s:%s/fortunes", BACKEND_DNS, BACKEND_PORT)
+        var postUrl = fmt.Sprintf("http://%s/fortunes", BACKEND_SERVICE)
         var jsonStr = []byte(fmt.Sprintf(`{"id": "%d", "message": "%s"}`, rand.Intn(10000), f.Message))
 
         _, err := myClient.Post(postUrl, "application/json", bytes.NewBuffer(jsonStr))
