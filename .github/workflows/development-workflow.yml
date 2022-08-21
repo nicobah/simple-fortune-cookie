@@ -28,7 +28,7 @@ jobs:
       - name: Test
         run: cd frontend && go test .
 
-  Push_to_docker:
+  Push to Dockerhub:
     needs: Build
     runs-on: ubuntu-latest
     steps:
@@ -52,7 +52,7 @@ jobs:
           push: true
           tags: nicobah/devops_frontend
 
-  Test_kubernetes:
+  Test Kubernetes:
     needs: Push_to_docker
     runs-on: self-hosted
     steps:
