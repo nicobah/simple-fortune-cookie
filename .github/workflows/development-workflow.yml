@@ -53,7 +53,7 @@ jobs:
           tags: nicobah/devops_frontend
 
   Test_Kubernetes:
-    needs: Push_To_Docker
+    needs: Push_To_Dockerhub
     runs-on: self-hosted
     steps:
       - name: check out
