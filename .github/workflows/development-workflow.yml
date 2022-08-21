@@ -18,10 +18,13 @@ jobs:
         run: sudo apt-get update  && sudo apt-get install golang-go -y
       - name: Build
         run: cd frontend && go build .
+      - name: Build
+        run: cd backend && go build .
+  test:
       - name: Test
         run: cd frontend && go test .
   Push_to_docker:
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: check out
